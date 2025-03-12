@@ -5,7 +5,7 @@ using UnityEngine;
 public class RotateWall1 : MonoBehaviour
 {
 
-    public float speed = 15;
+    public float speed = 50;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +16,7 @@ public class RotateWall1 : MonoBehaviour
     void Update()
     {
          
-       transform.Rotate(Vector3.up, 15 * Time.deltaTime);
+       transform.Rotate(Vector3.up, 50 * Time.deltaTime);
     
     }
 }

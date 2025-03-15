@@ -19,8 +19,6 @@ public class ClickToBounceBall : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            /*Debug.Log("detected");*/
-
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
@@ -47,11 +45,8 @@ public class ClickToBounceBall : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        /*Debug.Log("collision event: " + collision.gameObject.name);*/
-
         if (collision.gameObject.CompareTag("Ground"))
         {
-            /*Debug.Log("detected");*/
             rb.velocity = new Vector3(rb.velocity.x, Mathf.Abs(rb.velocity.y) * 0.9f, rb.velocity.z);
         }
     }

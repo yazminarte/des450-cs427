@@ -1,11 +1,15 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 
 public class ClickToBatSwing : MonoBehaviour
 {
     private bool isSwinging = false;
+    private AudioSource audioSource;
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     void OnMouseDown()
     {
@@ -31,43 +35,41 @@ public class ClickToBatSwing : MonoBehaviour
         float elapsedTime = 0f;
         float duration = 0.9f;
 
-        while (elapsedTime < duration)
+        if (audioSource != null && audioSource.clip != null)
+        {
+            audioSource.Play();
+        }
+
+        while (elapsedTime < duration / 2)
         {
             transform.rotation = Quaternion.Lerp(originalRotation, backswingRotation, elapsedTime / (duration / 2));
             elapsedTime += Time.deltaTime * swingSpeed;
-
             yield return null;
         }
-
         transform.rotation = backswingRotation;
 
         yield return new WaitForSeconds(0.1f);
 
         elapsedTime = 0f;
-
         while (elapsedTime < duration)
         {
             transform.rotation = Quaternion.Lerp(backswingRotation, swingRotation, elapsedTime / duration);
             elapsedTime += Time.deltaTime * swingSpeed;
-
             yield return null;
         }
-
         transform.rotation = swingRotation;
 
         yield return new WaitForSeconds(0.2f);
 
         elapsedTime = 0f;
-
         while (elapsedTime < duration)
         {
             transform.rotation = Quaternion.Lerp(swingRotation, originalRotation, elapsedTime / duration);
             elapsedTime += Time.deltaTime * returnSpeed;
-
             yield return null;
         }
-
         transform.rotation = originalRotation;
+
         isSwinging = false;
     }
 }

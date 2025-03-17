@@ -7,6 +7,8 @@ public class ClickControlAnimation : MonoBehaviour
 {
     public GameObject anchorGameObject;
     public string weightsSelected;
+    public AudioSource audioSource;
+
     private void Awake()
     {
         if (!PlayerPrefs.HasKey("WeightsSelected"))
@@ -24,9 +26,13 @@ public class ClickControlAnimation : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             this.GetComponent<CapsuleCollider>().enabled = false;
+            audioSource.Play();
+
             print("Play The Animaton");
             this.GetComponent<Animator>().SetTrigger("Play");
             weightsSelected = PlayerPrefs.GetString("WeightsSelected");
+            //gameObject.GetComponent<AudioSource>().Play();
+
             string[] weightsSelectedArray = weightsSelected.Split('|');
             if (Array.FindIndex(weightsSelectedArray, e => e == this.gameObject.name) == -1)
             {
@@ -60,3 +66,4 @@ public class ClickControlAnimation : MonoBehaviour
         anchorGameObject.GetComponent<Rigidbody>().useGravity = true;
     }
 }
+

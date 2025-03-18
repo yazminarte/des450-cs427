@@ -5,10 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
-  - portaldestination
-  - portaloutput
-  - mango
-  - orange
   layers:
   - Default
   - TransparentFX

@@ -11,10 +11,16 @@ public class ConfettScript : MonoBehaviour
     {
         if (other.gameObject.tag =="Player")
 		{
-            confettiEmitter.Emit(300);
+            confettiEmitter.Play();
 		}
     }
-
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag =="Player")
+		{
+            confettiEmitter.Stop();
+		}
+    }
     void Update()
     {
 

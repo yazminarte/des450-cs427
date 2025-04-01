@@ -7,36 +7,27 @@ public class ClickToBounceBall : MonoBehaviour
     private Rigidbody rb;
     private bool isFalling = false;
     private AudioSource audioSource;
+
     public AudioClip clickSound;
     public AudioClip bounceSound;
+    public Transform wand;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
         rb.constraints = RigidbodyConstraints.FreezePositionY;
-
         audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if ((/*Input.GetMouseButtonDown(0) || */CAVE2.GetButtonDown(CAVE2.Button.Button3)) && IsPointingAtThis())
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
+            ActivateGravity();
+            if (audioSource != null && clickSound != null)
             {
-                if (hit.collider.gameObject == gameObject)
-                {
-                    ActivateGravity();
-
-                    if (audioSource != null && clickSound != null)
-                    {
-                        audioSource.PlayOneShot(clickSound);
-                    }
-                }
+                audioSource.PlayOneShot(clickSound);
             }
         }
     }
@@ -56,12 +47,22 @@ public class ClickToBounceBall : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            rb.velocity = new Vector3(rb.velocity.x, Mathf.Abs(rb.velocity.y) * 0.9f, rb.velocity.z);
+            float newYVelocity = Mathf.Abs(rb.velocity.y) * 0.85f;
+            rb.velocity = new Vector3(rb.velocity.x, newYVelocity, rb.velocity.z);
 
             if (audioSource != null && bounceSound != null)
             {
                 audioSource.PlayOneShot(bounceSound);
             }
         }
+    }
+
+    bool IsPointingAtThis()
+    {
+        Ray ray = Input.GetMouseButtonDown(0)
+            ? Camera.main.ScreenPointToRay(Input.mousePosition)
+            : new Ray(wand.position, wand.forward);
+
+        return Physics.Raycast(ray, out RaycastHit hit) && hit.collider.gameObject == gameObject;
     }
 }

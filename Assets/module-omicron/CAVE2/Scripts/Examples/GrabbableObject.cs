@@ -306,4 +306,9 @@ public class GrabbableObject : CAVE2Interactable {
             }
         }
     }
+    public bool getWandPointing()
+    {
+        return wandPointing;
+    }
 }
+

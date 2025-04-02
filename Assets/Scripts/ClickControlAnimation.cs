@@ -8,6 +8,20 @@ public class ClickControlAnimation : MonoBehaviour
     public GameObject anchorGameObject;
     public string weightsSelected;
     public AudioSource audioSource;
+    public GrabbableObject grabOb;
+
+    void Start()
+    {
+        grabOb = gameObject.GetComponent<GrabbableObject>();
+    }
+
+    void Update()
+    {
+        if (grabOb.getWandPointing())
+        {
+            DoOnHover();
+        }
+    }
 
     private void Awake()
     {
@@ -21,9 +35,9 @@ public class ClickControlAnimation : MonoBehaviour
             PlayerPrefs.SetString("WeightsSelected", "");
         }
     }
-    private void OnMouseOver()
+    private void DoOnHover()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (CAVE2.GetButtonDown(CAVE2.Button.Button3))
         {
             this.GetComponent<CapsuleCollider>().enabled = false;
             audioSource.Play();

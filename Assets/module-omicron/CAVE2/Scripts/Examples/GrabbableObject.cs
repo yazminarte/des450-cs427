@@ -199,7 +199,7 @@ public class GrabbableObject : CAVE2Interactable {
     {
         if( grabbed )
         {
-            previousPositions.Enqueue(GetComponent<Rigidbody>().position);
+            // previousPositions.Enqueue(GetComponent<Rigidbody>().position);
 
             // Save only the last 5 frames of positions
             if(previousPositions.Count > 5)
@@ -219,7 +219,7 @@ public class GrabbableObject : CAVE2Interactable {
                     s2 = (Vector3)previousPositions.Dequeue();
                 throwForce += (s2 - s1);
             }
-            GetComponent<Rigidbody>().AddForce(throwForce * 10, ForceMode.Impulse);
+            // GetComponent<Rigidbody>().AddForce(throwForce * 10, ForceMode.Impulse);
             wasGrabbed = false;
         }
     }
